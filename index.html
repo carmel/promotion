@@ -10,7 +10,8 @@
             theme: {
                 extend: {
                     colors: {
-                        'brand-blue': '#2563EB',
+                        'brand-blue': '#607d8b',
+                        'brand-blue-dark': '#4b636e',
                         'brand-light': '#F3F4F6'
                     }
                 }
@@ -27,6 +28,35 @@
             const modal = document.getElementById('dev-modal');
             modal.classList.add('hidden');
         }
+
+        // 移动端菜单切换
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuLinks = mobileMenu.getElementsByTagName('a');
+
+            // 切换菜单显示/隐藏
+            function toggleMenu() {
+                mobileMenu.classList.toggle('hidden');
+            }
+
+            // 点击汉堡按钮时切换菜单
+            mobileMenuButton.addEventListener('click', toggleMenu);
+
+            // 为每个菜单项添加点击事件
+            Array.from(mobileMenuLinks).forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // 点击菜单外区域时关闭菜单
+            document.addEventListener('click', function(event) {
+                if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target) && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
     </script>
 </head>
 <body class="bg-brand-light text-gray-800">
@@ -40,7 +70,7 @@
                 <h2 class="text-2xl font-bold mb-4">iOS 版本尚在开发中，敬请期待！</h2>
                 <!-- <p class="text-gray-600 mb-6">iOS 版本目前正在紧张开发中，敬请期待！我们将尽快推出。</p> -->
             </div>
-            <button onclick="closeDevModal()" class="bg-brand-blue text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+            <button onclick="closeDevModal()" class="bg-brand-blue text-white px-6 py-3 rounded-lg hover:bg-brand-blue-dark transition">
                 知道了
             </button>
         </div>
@@ -59,8 +89,28 @@
                     <a href="#download" class="hover:text-gray-200">下载</a>
                     <a href="release_note.html" class="hover:text-gray-200">版本</a>
                 </nav>
+                <button id="mobile-menu-button" class="md:hidden flex justify-center w-8 h-8 bg-brand-blue rounded-full hover:bg-brand-blue-dark transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
             </div>
         </header>
+
+        <!-- 移动端菜单 -->
+        <nav id="mobile-menu" class="hidden fixed top-0 left-0 right-0 bg-brand-blue text-white py-4 px-4 shadow-md z-50">
+            <ul class="flex flex-col">
+                <li class="block">
+                    <a href="#features" class="block w-full py-3 px-4 hover:bg-brand-blue-dark transition-colors duration-200">功能</a>
+                </li>
+                <li class="block">
+                    <a href="#download" class="block w-full py-3 px-4 hover:bg-brand-blue-dark transition-colors duration-200">下载</a>
+                </li>
+                <li class="block">
+                    <a href="release_note.html" class="block w-full py-3 px-4 hover:bg-brand-blue-dark transition-colors duration-200">版本</a>
+                </li>
+            </ul>
+        </nav>
 
         <!-- 主页面内容 -->
         <main class="flex-grow container mx-auto px-4 md:px-8 py-12 pt-24">
@@ -71,10 +121,10 @@
                         S-Word - 以神的话语为利剑，击杀身内身外仇敌。专为Christians打造的离线圣经阅读与灵修应用。
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#download" class="bg-brand-blue text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                        <a href="#download" class="bg-brand-blue text-white px-6 py-3 rounded-lg hover:bg-brand-blue-dark transition">
                             立即下载
                         </a>
-                        <a href="#features" class="border border-brand-blue text-brand-blue px-6 py-3 rounded-lg hover:bg-blue-50 transition">
+                        <a href="#features" class="border border-gray-300 text-gray-600 px-6 py-3 rounded-lg hover:bg-gray-50 transition">
                             了解更多
                         </a>
                     </div>
@@ -89,21 +139,21 @@
                 <h2 class="text-3xl font-bold text-center mb-12">应用特性</h2>
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-brand-blue mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
                         <h3 class="text-xl font-semibold mb-3">沉浸式阅读</h3>
                         <p class="text-gray-600">精心设计的阅读界面，让阅读圣经成为一种享受</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-brand-blue mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                         </svg>
                         <h3 class="text-xl font-semibold mb-3">诗歌资源</h3>
                         <p class="text-gray-600">完整的歌词、歌谱和音乐，丰富你的灵修体验</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-brand-blue mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                         <h3 class="text-xl font-semibold mb-3">智能检索</h3>
@@ -112,20 +162,20 @@
                 </div>
                 <div class="grid md:grid-cols-3 gap-6 mt-6">
                     <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-brand-blue mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
                         </svg>
                         <h3 class="text-xl font-semibold mb-3">语音朗读</h3>
                         <p class="text-gray-600">随时随地聆听神的话语，多场景适配</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-                        <svg xmlns="http://www.w3.org/2000/svg"  class="h-12 w-12 text-brand-blue mb-4" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 4h8V2h2v2h1a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V2h2zM5 8v12h14V8zm2 3h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2zm0 4h2v2h-2zm-4 0h2v2h-2zm-4 0h2v2H7z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg"  class="h-12 w-12 text-gray-600 mb-4" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 4h8V2h2v2h1a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V2h2zM5 8v12h14V8zm2 3h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2zm0 4h2v2h-2zm-4 0h2v2h-2zm-4 0h2v2H7z"/></svg>
                         <h3 class="text-xl font-semibold mb-3">阅读计划</h3>
                         <p class="text-gray-600">轻松制定个性化阅读计划，持续成长</p>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
   
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-brand-blue mb-4" viewBox="0 0 24 24"><path fill="currentColor" d="M16.23 18L12 15.45L7.77 18l1.12-4.81l-3.73-3.23l4.92-.42L12 5l1.92 4.53l4.92.42l-3.73 3.23zM12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600 mb-4" viewBox="0 0 24 24"><path fill="currentColor" d="M16.23 18L12 15.45L7.77 18l1.12-4.81l-3.73-3.23l4.92-.42L12 5l1.92 4.53l4.92.42l-3.73 3.23zM12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>
                         <h3 class="text-xl font-semibold mb-3">收藏定位</h3>
                         <p class="text-gray-600">快速定位收藏内容，随时继续阅读</p>
                     </div>
@@ -137,10 +187,10 @@
                 <h2 class="text-3xl font-bold mb-6">现在开始你的属灵追求之旅</h2>
                 <p class="text-lg mb-8">S-Word - 随时随地，与神同行</p>
                 <div class="flex justify-center space-x-4">
-                  <a href="javascript:void(0)" onclick="showDevModal()" class="bg-white text-brand-blue px-8 py-3 rounded-lg hover:bg-gray-100 transition">
+                  <a href="javascript:void(0)" onclick="showDevModal()" class="bg-white text-gray-600 px-8 py-3 rounded-lg hover:bg-gray-100 transition">
                     iOS 版
                 </a>
-                    <a href="https://oss.carmels.org/s-word_1.0.8.apk" class="bg-white text-brand-blue px-8 py-3 rounded-lg hover:bg-gray-100 transition">
+                    <a href="https://oss.carmels.org/s-word_1.0.8.apk" class="bg-white text-gray-600 px-8 py-3 rounded-lg hover:bg-gray-100 transition">
                         Android 版
                     </a>
                 </div>
